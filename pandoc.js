@@ -1402,7 +1402,7 @@ Markdown_Parser.prototype.encodeAmpsAndAngles = function(text) {
         text = text.replace(/&(?!#?[xX]?(?:[0-9a-fA-F]+|\w+);)/, '&amp;');
     }
     // Encode remaining <'s
-    text = text.replace(/</g, '&lt;');
+    text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
     return text;
 };
@@ -2664,7 +2664,7 @@ MarkdownExtra_Parser.prototype.formParagraphs = function(text) {
     }
 
     // Join grafs in one text, then unhash HTML tags. 
-    text = grafs.join("\n\n");
+    text = grafs.join("\n");
 
     // Finish by removing any tag hashes still present in $text.
     text = this.unhash(text);
@@ -2865,12 +2865,4 @@ MarkdownExtra_Parser.prototype.doAbbreviations = function(text) {
     }
     return text;
 };
-
-
-/**
- * Export to Node.js
- */
-this.Markdown = Markdown;
-this.Markdown_Parser = Markdown_Parser;
-this.MarkdownExtra_Parser = MarkdownExtra_Parser;
 
