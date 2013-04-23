@@ -78,7 +78,8 @@ function Markdown_Parser() {
 
     this.nested_brackets_depth = 6;
     this.nested_url_parenthesis_depth = 4;
-    this.escape_chars = "\\\\`*_{}[]()>#+-.!";
+    //this.escape_chars = "\\\\`*_{}[]()>#+-.!";
+    this.escape_chars = "\\`*_{}[]()>#+-.!~\"";
 
     // Document transformations
     this.document_gamut = [
@@ -248,7 +249,7 @@ Markdown_Parser.prototype._php_rtrim = function(target, charlist) {
 };
 
 Markdown_Parser.prototype._php_htmlspecialchars_ENT_NOQUOTES = function(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
 
 
