@@ -441,17 +441,6 @@ Markdown_Parser.prototype.hashHTMLBlocks = function(text) {
             '[ ]*'                         +
             '(?=\\n{2,}|\\n*\\x03)'        + // followed by a blank line or end of document
 
-        '|' + // PHP and ASP-style processor instructions (<? and <%)
-
-            '[ ]{0,' + less_than_tab + '}' +
-            '(?:'                          + //'(?s:' +
-                '<([?%])'                  + // $2
-                '.*?'                      +
-                '\\2>'                     +
-            ')'                            +
-            '[ ]*'                         +
-            '(?=\\n{2,}|\\n*\\x03)'        + // followed by a blank line or end of document
-
         ')' +
     ')', 'mig');
     // FIXME: JS doesnt have enough escape sequence \A nor \Z.
