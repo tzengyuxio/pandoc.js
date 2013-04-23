@@ -13,7 +13,7 @@ for root, dirs, files in os.walk('./Tests/'):
             continue
         else:
             count += 1
-            if count > 5:
+            if count > 8:
                 break;
             fname = fname.replace('.text', '')
             filebody += ('/**\n * %s\n */\n') % fname

@@ -1070,7 +1070,7 @@ Markdown_Parser.prototype.doCodeBlocks = function(text) {
         codeblock = codeblock.replace(/(?=\x02)\n+|\n+(?=\x03)/g, '');
         codeblock = self.__unwrapSTXETX__(codeblock);
 
-        codeblock = "<pre><code>" + codeblock + "\n</code></pre>";
+        codeblock = "<pre><code>" + codeblock + "</code></pre>";
         return "\n\n" + self.hashBlock(codeblock) + "\n\n";
     });
     text = this.__unwrapSTXETX__(text);
@@ -1280,7 +1280,7 @@ Markdown_Parser.prototype.doBlockQuotes = function(text) {
         bq = bq.replace(/^[ ]*>[ ]?|^[ ]+$/mg, '');
         bq = self.runBlockGamut(bq);		// recurse
 
-        bq = bq.replace(/^/mg, "  ");
+        //bq = bq.replace(/^/mg, "  ");
         // These leading spaces cause problem with <pre> content, 
         // so we need to fix that:
         bq = bq.replace(/(\\s*<pre>[\\s\\S]+?<\/pre>)/mg, function(match, pre) {

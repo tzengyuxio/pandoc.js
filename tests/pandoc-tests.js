@@ -325,3 +325,86 @@ QUnit.test("Blockquotes with code blocks", function() {
     QUnit.assert.equal(result, expected);
 });
 
+/**
+ * Code Blocks
+ */
+QUnit.test("Code Blocks", function() {
+    var input =
+        "	code block on the first line\n" +
+        "	\n" +
+        "Regular text.\n" +
+        "\n" +
+        "    code block indented by spaces\n" +
+        "\n" +
+        "Regular text.\n" +
+        "\n" +
+        "	the lines in this block  \n" +
+        "	all contain trailing spaces  \n" +
+        "\n" +
+        "Regular Text.\n" +
+        "\n" +
+        "	code block on the last line\n" +
+        "";
+
+    var expected =
+        "<pre><code>code block on the first line</code></pre>\n" +
+        "<p>Regular text.</p>\n" +
+        "<pre><code>code block indented by spaces</code></pre>\n" +
+        "<p>Regular text.</p>\n" +
+        "<pre><code>the lines in this block  \n" +
+        "all contain trailing spaces  </code></pre>\n" +
+        "<p>Regular Text.</p>\n" +
+        "<pre><code>code block on the last line</code></pre>\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
+/**
+ * Code Spans
+ */
+QUnit.test("Code Spans", function() {
+    var input =
+        "`<test a=\"` content of attribute `\">`\n" +
+        "\n" +
+        "Fix for backticks within HTML tag: <span attr='`ticks`'>like this</span>\n" +
+        "\n" +
+        "Here's how you put `` `backticks` `` in a code span.\n" +
+        "\n" +
+        "";
+
+    var expected =
+        "<p><code>&lt;test a=&quot;</code> content of attribute <code>&quot;&gt;</code></p>\n" +
+        "<p>Fix for backticks within HTML tag: <span attr='`ticks`'>like this</span></p>\n" +
+        "<p>Here's how you put <code>`backticks`</code> in a code span.</p>\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
+/**
+ * Hard-wrapped paragraphs with list-like lines
+ */
+QUnit.test("Hard-wrapped paragraphs with list-like lines", function() {
+    var input =
+        "In Markdown 1.0.0 and earlier. Version\n" +
+        "8. This line turns into a list item.\n" +
+        "Because a hard-wrapped line in the\n" +
+        "middle of a paragraph looked like a\n" +
+        "list item.\n" +
+        "\n" +
+        "Here's one with a bullet.\n" +
+        "* criminey.\n" +
+        "";
+
+    var expected =
+        "<p>In Markdown 1.0.0 and earlier. Version 8. This line turns into a list item. Because a hard-wrapped line in the middle of a paragraph looked like a list item.</p>\n" +
+        "<p>Here's one with a bullet. * criminey.</p>\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
