@@ -3,7 +3,7 @@ if (typeof require != 'undefined') {
         QUnit = require('qunit-cli');
     }
     if (typeof Markdown == 'undefined') {
-        Markdown = require('../js-markdown-extra.js').Markdown;
+        Markdown = require('../pandoc.js').Markdown;
     }
 }
 QUnit.module( "ALL Syntax test" );
