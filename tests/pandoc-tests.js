@@ -408,3 +408,346 @@ QUnit.test("Hard-wrapped paragraphs with list-like lines", function() {
     QUnit.assert.equal(result, expected);
 });
 
+/**
+ * Horizontal rules
+ */
+QUnit.test("Horizontal rules", function() {
+    var input =
+        "Dashes:\n" +
+        "\n" +
+        "---\n" +
+        "\n" +
+        " ---\n" +
+        " \n" +
+        "  ---\n" +
+        "\n" +
+        "   ---\n" +
+        "\n" +
+        "	---\n" +
+        "\n" +
+        "- - -\n" +
+        "\n" +
+        " - - -\n" +
+        " \n" +
+        "  - - -\n" +
+        "\n" +
+        "   - - -\n" +
+        "\n" +
+        "	- - -\n" +
+        "\n" +
+        "\n" +
+        "Asterisks:\n" +
+        "\n" +
+        "***\n" +
+        "\n" +
+        " ***\n" +
+        " \n" +
+        "  ***\n" +
+        "\n" +
+        "   ***\n" +
+        "\n" +
+        "	***\n" +
+        "\n" +
+        "* * *\n" +
+        "\n" +
+        " * * *\n" +
+        " \n" +
+        "  * * *\n" +
+        "\n" +
+        "   * * *\n" +
+        "\n" +
+        "	* * *\n" +
+        "\n" +
+        "\n" +
+        "Underscores:\n" +
+        "\n" +
+        "___\n" +
+        "\n" +
+        " ___\n" +
+        " \n" +
+        "  ___\n" +
+        "\n" +
+        "   ___\n" +
+        "\n" +
+        "    ___\n" +
+        "\n" +
+        "_ _ _\n" +
+        "\n" +
+        " _ _ _\n" +
+        " \n" +
+        "  _ _ _\n" +
+        "\n" +
+        "   _ _ _\n" +
+        "\n" +
+        "    _ _ _\n" +
+        "";
+
+    var expected =
+        "<p>Dashes:</p>\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<pre><code>---</code></pre>\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<pre><code>- - -</code></pre>\n" +
+        "<p>Asterisks:</p>\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<pre><code>***</code></pre>\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<pre><code>* * *</code></pre>\n" +
+        "<p>Underscores:</p>\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<pre><code>___</code></pre>\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<hr />\n" +
+        "<pre><code>_ _ _</code></pre>\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
+/**
+ * Inline HTML (Advanced)
+ */
+QUnit.test("Inline HTML (Advanced)", function() {
+    var input =
+        "Simple block on one line:\n" +
+        "\n" +
+        "<div>foo</div>\n" +
+        "\n" +
+        "And nested without indentation:\n" +
+        "\n" +
+        "<div>\n" +
+        "<div>\n" +
+        "<div>\n" +
+        "foo\n" +
+        "</div>\n" +
+        "<div style=\">\"/>\n" +
+        "</div>\n" +
+        "<div>bar</div>\n" +
+        "</div>\n" +
+        "";
+
+    var expected =
+        "<p>Simple block on one line:</p>\n" +
+        "<div>\n" +
+        "foo\n" +
+        "</div>\n" +
+        "\n" +
+        "<p>And nested without indentation:</p>\n" +
+        "<div>\n" +
+        "<div>\n" +
+        "<div>\n" +
+        "foo\n" +
+        "</div>\n" +
+        "<div style=\">\n" +
+        "&quot;/&gt;\n" +
+        "</div>\n" +
+        "<div>\n" +
+        "bar\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
+/**
+ * Inline HTML (Simple)
+ */
+QUnit.test("Inline HTML (Simple)", function() {
+    var input =
+        "Here's a simple block:\n" +
+        "\n" +
+        "<div>\n" +
+        "	foo\n" +
+        "</div>\n" +
+        "\n" +
+        "This should be a code block, though:\n" +
+        "\n" +
+        "	<div>\n" +
+        "		foo\n" +
+        "	</div>\n" +
+        "\n" +
+        "As should this:\n" +
+        "\n" +
+        "	<div>foo</div>\n" +
+        "\n" +
+        "Now, nested:\n" +
+        "\n" +
+        "<div>\n" +
+        "	<div>\n" +
+        "		<div>\n" +
+        "			foo\n" +
+        "		</div>\n" +
+        "	</div>\n" +
+        "</div>\n" +
+        "\n" +
+        "This should just be an HTML comment:\n" +
+        "\n" +
+        "<!-- Comment -->\n" +
+        "\n" +
+        "Multiline:\n" +
+        "\n" +
+        "<!--\n" +
+        "Blah\n" +
+        "Blah\n" +
+        "-->\n" +
+        "\n" +
+        "Code block:\n" +
+        "\n" +
+        "	<!-- Comment -->\n" +
+        "\n" +
+        "Just plain comment, with trailing spaces on the line:\n" +
+        "\n" +
+        "<!-- foo -->   \n" +
+        "\n" +
+        "Code:\n" +
+        "\n" +
+        "	<hr />\n" +
+        "	\n" +
+        "Hr's:\n" +
+        "\n" +
+        "<hr>\n" +
+        "\n" +
+        "<hr/>\n" +
+        "\n" +
+        "<hr />\n" +
+        "\n" +
+        "<hr>   \n" +
+        "\n" +
+        "<hr/>  \n" +
+        "\n" +
+        "<hr /> \n" +
+        "\n" +
+        "<hr class=\"foo\" id=\"bar\" />\n" +
+        "\n" +
+        "<hr class=\"foo\" id=\"bar\"/>\n" +
+        "\n" +
+        "<hr class=\"foo\" id=\"bar\" >\n" +
+        "\n" +
+        "";
+
+    var expected =
+        "<p>Here's a simple block:</p>\n" +
+        "<div>\n" +
+        "    \n" +
+        "foo\n" +
+        "</div>\n" +
+        "\n" +
+        "<p>This should be a code block, though:</p>\n" +
+        "<pre><code>&lt;div&gt;\n" +
+        "    foo\n" +
+        "&lt;/div&gt;</code></pre>\n" +
+        "<p>As should this:</p>\n" +
+        "<pre><code>&lt;div&gt;foo&lt;/div&gt;</code></pre>\n" +
+        "<p>Now, nested:</p>\n" +
+        "<div>\n" +
+        "    <div>\n" +
+        "        <div>\n" +
+        "            \n" +
+        "foo\n" +
+        "</div>\n" +
+        "    </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "<p>This should just be an HTML comment:</p>\n" +
+        "<!-- Comment -->\n" +
+        "\n" +
+        "<p>Multiline:</p>\n" +
+        "<!--\n" +
+        "Blah\n" +
+        "Blah\n" +
+        "-->\n" +
+        "\n" +
+        "<p>Code block:</p>\n" +
+        "<pre><code>&lt;!-- Comment --&gt;</code></pre>\n" +
+        "<p>Just plain comment, with trailing spaces on the line:</p>\n" +
+        "<!-- foo -->   \n" +
+        "\n" +
+        "<p>Code:</p>\n" +
+        "<pre><code>&lt;hr /&gt;</code></pre>\n" +
+        "<p>Hr's:</p>\n" +
+        "<hr>\n" +
+        "\n" +
+        "<hr/>\n" +
+        "\n" +
+        "<hr />\n" +
+        "\n" +
+        "<hr>   \n" +
+        "\n" +
+        "<hr/>  \n" +
+        "\n" +
+        "<hr /> \n" +
+        "\n" +
+        "<hr class=\"foo\" id=\"bar\" />\n" +
+        "\n" +
+        "<hr class=\"foo\" id=\"bar\"/>\n" +
+        "\n" +
+        "<hr class=\"foo\" id=\"bar\" >\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
+/**
+ * Inline HTML comments
+ */
+QUnit.test("Inline HTML comments", function() {
+    var input =
+        "Paragraph one.\n" +
+        "\n" +
+        "<!-- This is a simple comment -->\n" +
+        "\n" +
+        "<!--\n" +
+        "	This is another comment.\n" +
+        "-->\n" +
+        "\n" +
+        "Paragraph two.\n" +
+        "\n" +
+        "<!-- one comment block -- -- with two comments -->\n" +
+        "\n" +
+        "The end.\n" +
+        "";
+
+    var expected =
+        "<p>Paragraph one.</p>\n" +
+        "<!-- This is a simple comment -->\n" +
+        "\n" +
+        "<!--\n" +
+        "    This is another comment.\n" +
+        "-->\n" +
+        "\n" +
+        "<p>Paragraph two.</p>\n" +
+        "<!-- one comment block -- -- with two comments -->\n" +
+        "\n" +
+        "<p>The end.</p>\n" +
+        "";
+
+    var result = Markdown(input);
+    QUnit.assert.equal(result, expected);
+});
+
